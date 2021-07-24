@@ -4,7 +4,8 @@
   "description": "Build a chat application using Node.js and React with Web Sockets, PostgreSQL, Redux",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "Node.js",
@@ -15,5 +16,12 @@
     "Redux"
   ],
   "author": "Aleksey Belchenkov",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
