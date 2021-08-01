@@ -2,14 +2,9 @@ const express = require('express');
 
 const app = express();
 const config = require('./config/app');
+const router = require('./router');
 
-app.get('/', (req, res) => {
-    return res.send('Home');
-});
-
-app.get('/login', (req, res) => {
-    return res.send('Login');
-});
+app.use(router);
 
 const port = config.appPort || 3000;
 
