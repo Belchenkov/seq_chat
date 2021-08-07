@@ -1,5 +1,7 @@
 const HttpStatus = require('http-status-codes');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const {INTERNAL_SERVER_ERROR} = require("http-status-codes/build/cjs/legacy");
 
 const User = require('../models').User;
 
@@ -29,21 +31,35 @@ exports.login = async (req, res) => {
                 });
         }
 
+        const userWithToken = generateToken(user.get({ raw: true }));
+
         return res
             .status(HttpStatus.OK)
             .json({
                 status: true,
-                user
+                user: userWithToken
             });
     } catch (err) {
         return res
-            .status(HttpStatus.BAD_REQUEST)
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
             .json({
                 status: false,
                 message: err.message
             });
     }
-
 };
 
 exports.register = async (req, res) => {};
+
+const generateToken = user => {
+    delete user.password;
+
+    const token = jwt.sign(user, 'secret', {
+        expiresIn: 86400
+    });
+
+    return {
+        ...user,
+        ...{ token }
+    }
+};
